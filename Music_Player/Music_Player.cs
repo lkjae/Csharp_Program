@@ -19,7 +19,7 @@ namespace WindowsFormsApp5
 
         string[] Pic = new string[4]
        {
-            @"C:\\Temp/vancouver.PNG","C:\\Temp/호랑수월가.PNG","C:\\Temp/사랑은 늘 도망가.PNG", "C:\\Temp/fromnyx.PNG"
+            @"C:\\Temp/vancouver.PNG","C:\\Temp/호랑수월가.PNG","C:\\Temp/사랑은 늘 도망가.PNG", "C:\\Temp/tomyx.PNG"
        };
 
         string[] Music = new string[4]
