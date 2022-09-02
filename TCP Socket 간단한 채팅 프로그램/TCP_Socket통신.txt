@@ -1,0 +1,63 @@
+Server Socket이 열려있음
+Socket의 본질은 File
+Server는 기본적으로 Process	
+
+RWX 
+Receive
+Send
+
+Server Process가 Socket에 IO를 한다.
+
+하드디스크(HDD)안에 File이 들어있다.
+A.bmp라고 가정을 했을때
+File system이 존재
+
+Driver
+
+HDD
+
+Server에 Memory할당
+
+Memory 에서 File Read
+
+메모리에 있던 일정 크기의 data가
+TCP와 Socket이 맞닿아 있는곳에서 "분해"가 일어남
+
+Packet은 택배박스와 굉장히 유사하다
+
+
+분해가 되어 segment가 여러개 나오면 Packet으로 담아서
+전달한다.
+
+트럭이 Frame, Frame속에 Packet이 들어가서 전달된다.
+목적지? 어떤 패킷이라는건 곧바로 EndPoint로 가는것이아닌 여러곳을 거쳐
+간다.
+
+Driver보다 높아질수록 Frame은 소실되고 Packet이
+Decapsulation되어 Segment(1,2)가 TCP Buffer에 들어감
+
+잘 수신했다고 ACK(#3)를 넘겨줌
+
+segment(1,2)를 받고 서버에서 ACK를 받기위해 wait이 발생 
+=> 속도 지연
+TCP가 UDP보다 느린 이유
+
+TCP Buffer의 크기= Window size 
+->수신측에서 segment가 날아오면 조립하여 집어넣을 수 있는 공간
+
+Ack(#3)안에 include window size
+결국은 3번을 전송을 해야하는데 전송할까말까를 결정을 해야됨
+*Ack(#3)에 window size를 체크했는데 자리가없으면 보내질않음
+*수신측의 window size > maximum segment size -->send
+	window size < maximum segment size -->wait
+
+TCP buffer 에서 File IO Buffer로 퍼올리는 속도 ->Read속도
+Read속도가 Network에서 수신하는 속도보다 무조건 빨라야함
+만약 속도가 느리면 window size가 부족해짐
+Packet을 보내지 않고 대기
+
+결론: 수신이 느리다라는건 결과적 현상이고, 그 원인은 송신이 느린것이다. 
+송신이 느리다는것은 서버가 늦어서 늦은게 아니고,
+받을 준비가 안되서 느린것일 수 도있다.
+이걸 파악을 잘 해야한다.
+
